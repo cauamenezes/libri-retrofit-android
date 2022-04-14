@@ -22,5 +22,5 @@ public interface RouterInterface {
 
     /****/
     @GET("/livro/listarLivro")
-    Call<List<List>>getLivros();
+    Call<List<Livro>>getLivros();
 }
