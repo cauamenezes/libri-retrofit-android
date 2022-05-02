@@ -1,14 +1,17 @@
 package com.cristianomoraes.libri_retorfit;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cristianomoraes.libri_retorfit.model.Item;
 import com.cristianomoraes.libri_retorfit.model.Livro;
@@ -39,9 +42,11 @@ public class FeedLivro extends AppCompatActivity {
         Call<List<Livro>> call = routerInterface.getLivros();
 
         call.enqueue(new Callback<List<Livro>>() {
+
             @Override
             public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response){
 
+                //Método isSuccessful() é da classe Response representada pela variável response
                 if(response.isSuccessful()) {
                     List<Item> itens = new ArrayList<>();
 
@@ -53,12 +58,16 @@ public class FeedLivro extends AppCompatActivity {
                         itens.add(new Item(0, list.get(i)));
                     }
 
+                    //Chama a activity da RecyclerView
                     RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+                    //Pega os dados e monta eles na RecyclerView
                     recyclerView.setAdapter(new LivroAdapter(itens));           
                 }
 
             }
 
+            //Só entra aqui se houver um erro maior, como: rota não criada, API não respondeu, e coisas assim.
             @Override
             public void onFailure(Call<List<Livro>> call, Throwable t) {
 
@@ -76,6 +85,8 @@ public class FeedLivro extends AppCompatActivity {
            this.itens = itens;
        }
 
+       //Cria os elementos necessários, pega os dados passados pelo onBindViewHolder
+       //e os injeta nos elementos.
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -85,6 +96,7 @@ public class FeedLivro extends AppCompatActivity {
             );                                                                      
         }
 
+        //Pega os dados
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -121,6 +133,55 @@ public class FeedLivro extends AppCompatActivity {
                txtDescricao = itemView.findViewById(R.id.txtLivroDescricao);
 
                /** AÇÃO DE CLICK PARA EDITAR LIVRO E EXCLUIR LIVRO **/
+               itemView.setOnClickListener(view -> {
+
+                   /**
+                    * setMessage -> Título da caixa de alerta
+                        Parâmetros:
+                                    1 - Título
+
+                    * setPositiveButton -> Define uma opção de ação
+                        Parâmetros:
+                                    1 - Título
+                                    2 - Ação a ser executada
+
+                    * setNegativeButton -> Define uma opção de ação
+                        Parâmetros:
+                                    1 - Título
+                                    2 - Ação a ser executada
+                    **/
+
+                   AlertDialog.Builder alertDialog = new AlertDialog.Builder(FeedLivro.this)
+                           .setMessage("Escolha a ação que deseja executar")
+                           .setPositiveButton("Alterar",(dialog1, witch)->{})
+                           .setNegativeButton("Excluir", (dialog1, witch)->{
+
+                               routerInterface = APIUtil.getUsuarioInterface();
+
+                               //Executa a requisição
+                               Call<Livro> call = routerInterface.deleteLivro(cod_livro);
+
+                               //Executa a response
+                               call.enqueue(new Callback<Livro>() {
+                                   @Override
+                                   public void onResponse(Call<Livro> call, Response<Livro> response) {
+
+                                       Toast.makeText(FeedLivro.this,
+                                               "Livro excluído com sucesso!",
+                                               Toast.LENGTH_SHORT).show();
+
+                                       startActivity(new Intent(FeedLivro.this, FeedLivro.class));
+                                   }
+
+                                   @Override
+                                   public void onFailure(Call<Livro> call, Throwable t) {
+
+                                   }
+                               });
+                           });
+
+                   alertDialog.show();
+               });
                
            }//FIM DO CONSTRUTOR DA CLASSE LIVROVIEWHOLDER
 

@@ -10,7 +10,7 @@ public class RetrofitFitClient {
 
     private static Retrofit retrofit = null;
 
-    /** MÉTODO DE ACESSO AO CLIENT **/
+    /** MÉTODO DE ACESSO DO CLIENT **/
     public static Retrofit getClient(String url) {
 
         Gson gson = new GsonBuilder().setLenient().create();

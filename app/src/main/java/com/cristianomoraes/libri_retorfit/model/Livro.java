@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Livro {
 
+    //Converte para gson os atributos com SerializedName - para exibir o nome que ficará no arquivo -
+    // e com Expose para expor eles ao gson
     @SerializedName("cod_livro")
     @Expose
     private int cod_livro;
