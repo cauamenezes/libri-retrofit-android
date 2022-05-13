@@ -18,7 +18,7 @@ import retrofit2.Response;
 
 public class CadastroUsuario extends AppCompatActivity {
 
-    /** ATRIBUTOS DE INTERFACE GRÁFICA **/
+    /** ATRIBUTO DE INTERFACE GRÁFICA **/
     EditText txtNome;
     EditText txtSobrenome;
     EditText txtEmail;
@@ -45,12 +45,12 @@ public class CadastroUsuario extends AppCompatActivity {
         /** TRATAMENTO DO EVENTO DE CLIQUE NO BOTÃO INSERIR **/
         btnInserir.setOnClickListener(view -> {
 
-            /** CRIA UM OJETO DA MODEL DE USUÁRIO **/
+            /** CRIA UM OBJETO DA MODEL DE USUÁRIO **/
             Usuario usuario = new Usuario();
 
             /** CARREGA OS DADOS DO FORMULÁRIO NO OBJETO DE MODEL USUÁRIO **/
             usuario.setNome(txtNome.getText().toString());
-            usuario.setSobrenome(txtSobrenome.getText().toString());
+            usuario.setSobreNome(txtSobrenome.getText().toString());
             usuario.setEmail(txtEmail.getText().toString());
             usuario.setLogin(txtLogin.getText().toString());
             usuario.setSenha(txtSenha.getText().toString());
@@ -58,28 +58,44 @@ public class CadastroUsuario extends AppCompatActivity {
             /** PASSAR OS DADOS PARA A APIREST **/
             routerInterface = APIUtil.getUsuarioInterface();
             addUsuario(usuario);
+
         });
 
-    } //FIM DO MÉTODO onCreate
+    }//FIM SO MÉTODO onCreate
 
     /** IMPLEMENTAÇÃO DO MÉTODO DE Call addUsuario **/
-    public void addUsuario(Usuario usuario) {
+    public void addUsuario(Usuario  usuario){
 
         Call<Usuario> call = routerInterface.addUsuario(usuario);
 
         call.enqueue(new Callback<Usuario>() {
-
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Toast.makeText(CadastroUsuario.this, "USUÁRIO INSERIDO COM SUCESSO",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(CadastroUsuario.this,
+                                "USUÁRIO INSERIDO COM SUCESSO",
+                                Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-
                 Log.d("ERRO-API", t.getMessage());
             }
         });
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }//FIM DA CLASSE

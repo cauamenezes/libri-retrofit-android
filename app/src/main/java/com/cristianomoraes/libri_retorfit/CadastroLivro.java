@@ -39,8 +39,10 @@ public class CadastroLivro extends AppCompatActivity {
         /** CONFIGURAÇÃO DO RouterInterface **/
         routerInterface = APIUtil.getUsuarioInterface();
 
-        /** TRATAMENTO DA AÇÃO DE CLICK OU TOQUE DE TELA DO BOTÃO INSERIR LIVRO **/
-        btnInserirLivro.setOnClickListener(view -> {
+        /** TRATAMENTO DA AÇÃO DE CLICK OU TOQUE DE TELA
+         * DO BOTÃO INSERIR LIVRO
+         * **/
+        btnInserirLivro.setOnClickListener(view->{
 
             /** CRIA O OBJETO DE LIVRO E RECEBE OS DADOS **/
             Livro livro = new Livro();
@@ -51,29 +53,43 @@ public class CadastroLivro extends AppCompatActivity {
 
             /** CHAMADA DO MÉTODO DA ROTA DE INSERÇÃO DE LIVROS **/
             addLivro(livro);
+
         });
 
-    }//FIM DO MÉTODO onCrate
+    }//FIM DO MÉTODO onCreate
 
-    /** IMPLEMENTAÇÃO DO MÉTODO addLivro DA INTERFACE RouterInterface **/
-    public void addLivro(Livro livro) {
+    /** IMPLEMENTAÇÃO DO MÉTODO addLivro DA INTERFACE RouterInterface**/
+    public void addLivro(Livro livro){
 
-        /** LIGA O MÉTODO addLivro DA CLASSE CadastroLivro COM SUA REPRESENTAÇÃO NA INTERFACE RouterInterface **/
+        /** LIGA O MÉTODO addLivro DA CLASSE CadstroLivro
+         * COM SUA REPRESENTAÇÃO NA INTERFACE RouterInterface
+         * **/
         Call<Livro> call = routerInterface.addLivro(livro);
 
         /** EXECUÇÃO DA CHAMADA DA ROTA **/
         call.enqueue(new Callback<Livro>() {
             @Override
             public void onResponse(Call<Livro> call, Response<Livro> response) {
-                Toast.makeText(CadastroLivro.this, "LIVRO INSERIDO COM SUCESSO",
+                Toast.makeText(CadastroLivro.this,
+                        "LIVRO INSERIDO COM SUCESSO",
                         Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Livro> call, Throwable t) {
-
                 Log.d("ERRO-API", t.getMessage());
             }
         });
+
     }
+
+
 }
+
+
+
+
+
+
+
+

@@ -3,15 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/libri_retorfit_ds3m/app/src/main/res/layout/activity_alterar_livro.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/camil/Desktop/PPDM/PROJETO02 - RETROFIT/AULA/libri_retorfit/app/src/main/res/layout/activity_cadastro_livro.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/camil/Desktop/PPDM/PROJETO02 - RETROFIT/AULA/libri_retorfit/app/src/main/res/layout/activity_cadastro_usuario.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/camil/Desktop/PPDM/PROJETO02 - RETROFIT/AULA/libri_retorfit/app/src/main/res/layout/activity_feed_livro.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/camil/Desktop/PPDM/PROJETO02 - RETROFIT/AULA/libri_retorfit/app/src/main/res/layout/activity_main.xml" value="0.16197916666666667" />
-        <entry key="app/src/main/res/layout/activity_cadastro_livro.xml" value="0.34375" />
-        <entry key="app/src/main/res/layout/activity_cadastro_usuario.xml" value="0.5911458333333334" />
-        <entry key="app/src/main/res/layout/activity_feed_livro.xml" value="0.34375" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5911458333333334" />
-        <entry key="app/src/main/res/layout/item_container_livro.xml" value="0.5820512820512821" />
+        <entry key="app/src/main/res/layout/activity_alterar_livro.xml" value="0.33177083333333335" />
+        <entry key="app/src/main/res/layout/activity_cadastro_livro.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_cadastro_usuario.xml" value="0.33177083333333335" />
+        <entry key="app/src/main/res/layout/activity_feed_livro.xml" value="0.4953343701399689" />
+        <entry key="app/src/main/res/layout/item_container_livro.xml" value="0.5" />
       </map>
     </option>
   </component>

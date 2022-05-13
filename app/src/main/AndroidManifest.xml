@@ -7,30 +7,33 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Libri_retorfit">
+        android:theme="@style/Theme.Libri_retorfit"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".CadastroLivro"
+            android:name=".AlterarLivro"
             android:exported="false" />
-        <activity
-            android:name=".CadastroUsuario"
-            android:exported="false" />
+        <!-- <activity -->
+        <!-- android:name=".CadastroLivro" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".CadastroUsuario" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".FeedLivro" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".FeedLivro"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
     </application>
 
 </manifest>

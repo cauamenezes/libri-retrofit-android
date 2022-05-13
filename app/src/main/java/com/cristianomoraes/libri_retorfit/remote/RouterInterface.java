@@ -10,16 +10,16 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-//Cria as rotas
 public interface RouterInterface {
 
-    /** ROTA DE USUÁRIO **/
+    /** ROTAS DE USUÁRIO **/
     @POST("/usuario/cadastrarUsuario")
     Call<Usuario> addUsuario(@Body Usuario usuario);
 
-    /** ROTA DE LIVROS **/
+    /** ROTAS DE LIVROS **/
     @POST("/livro/cadastrarLivro")
     Call<Livro> addLivro(@Body Livro livro);
 
@@ -27,5 +27,27 @@ public interface RouterInterface {
     Call<List<Livro>>getLivros();
 
     @DELETE("/livro/excluirLivro/{cod_livro}")
-    Call<Livro>deleteLivro(@Path("cod_livro") int cod_livro);
+    Call<Livro> deleteLivro(@Path("cod_livro") int cod_livro);
+
+    @GET("/livro/listarLivroId/{cod_livro}")
+    Call<List<Livro>>getLivroId(@Path("cod_livro") int cod_livro);
+
+    @PUT("/livro/alterarLivro")
+    Call<Livro>updateLivro(@Body Livro livro);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

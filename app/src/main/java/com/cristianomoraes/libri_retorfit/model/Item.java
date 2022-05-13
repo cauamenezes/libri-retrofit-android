@@ -3,15 +3,14 @@ package com.cristianomoraes.libri_retorfit.model;
 public class Item {
 
     /*
-    * 0 - Livro
-    * 1 - HQ
-    * 2 - Mangá
-    */
-
+    0 - livro
+    1 - HQ
+    2 - manga
+    * */
     private int type;
 
-    /* RECEBE OJETOS DE LIVRO, HQ, MANGÁ OU QUALQUER OBJETO
-    DE QUALQUER OUTRA CLASSE DE TIPO QUE VENHA A EXISTIR */
+    /*RECEBE OBJETOS DE LIVRO, HQ, MANGA OU QUALQUER OBJETO
+    * DE QUALQUER OUTRA CLASSE DE TIPO QUE VENHA A EXISTIR*/
     private Object object;
 
     public Item() {

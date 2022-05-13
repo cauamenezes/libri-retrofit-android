@@ -62,12 +62,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getSobrenome() {
+    public String getSobreNome() {
         return sobrenome;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+    public void setSobreNome(String sobreNome) {
+        this.sobrenome = sobreNome;
     }
 
     public String getEmail() {

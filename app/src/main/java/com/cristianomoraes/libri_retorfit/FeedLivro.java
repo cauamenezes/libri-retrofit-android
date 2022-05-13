@@ -38,74 +38,70 @@ public class FeedLivro extends AppCompatActivity {
         /** CONECTA O APLICATIVO COM A API **/
         routerInterface = APIUtil.getUsuarioInterface();
 
-        /** EXECUTA A CHAMADA PARA A ROTA DE LISTAGEM DE LIVROS **/
+        /** EXECUTA A CHAMADA  PARA A ROTA DE LISTAGEM DE LIVROS **/
         Call<List<Livro>> call = routerInterface.getLivros();
 
         call.enqueue(new Callback<List<Livro>>() {
-
             @Override
-            public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response){
+            public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
 
-                //Método isSuccessful() é da classe Response representada pela variável response
-                if(response.isSuccessful()) {
+                if(response.isSuccessful()){
                     List<Item> itens = new ArrayList<>();
 
                     /** RECEBE OS DADOS DA API **/
                     List<Livro> list = new ArrayList<Livro>();
                     list = response.body();
 
-                    for (int i = 0; i < list.size(); i++) {
+                    for(int i = 0; i < list.size(); i++){
                         itens.add(new Item(0, list.get(i)));
                     }
 
-                    //Chama a activity da RecyclerView
                     RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                    recyclerView.setAdapter(new LivroAdapter(itens));
 
-                    //Pega os dados e monta eles na RecyclerView
-                    recyclerView.setAdapter(new LivroAdapter(itens));           
                 }
 
             }
 
-            //Só entra aqui se houver um erro maior, como: rota não criada, API não respondeu, e coisas assim.
             @Override
             public void onFailure(Call<List<Livro>> call, Throwable t) {
 
             }
         });
 
-    }//FIM DO MÉTODO onCreate
+    }//FIM DO MÉTODO ONCREATE
 
     /** CLASSE DE ADAPTER DA RECYCLERVIEW **/
-    private class LivroAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private class LivroAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-       List<Item> itens;
+        List<Item> itens;
 
-       public LivroAdapter(List<Item> itens) {
-           this.itens = itens;
-       }
+        public LivroAdapter(List<Item> itens){
+            this.itens = itens;
+        }
 
-       //Cria os elementos necessários, pega os dados passados pelo onBindViewHolder
-       //e os injeta nos elementos.
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new LivroAdapter.LivroViewHolder(
-                    LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item_container_livro, parent, false)
-            );                                                                      
+                    LayoutInflater.from(
+                                        parent.getContext()).inflate(
+                                                                        R.layout.item_container_livro,
+                                                                        parent,
+                                                                        false
+                                        ));
         }
 
-        //Pega os dados
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-           /** DADOS DE LIVRO **/
-           if(getIntViewType(position) == 0) {
+            /** DADOS DE LIVRO **/
+            if(getItemViewType(position) == 0){
 
-               Livro livro = (Livro) itens.get(position).getObject();
-               ((LivroAdapter.LivroViewHolder) holder).setLivroData(livro);
-           }
+                Livro livro = (Livro) itens.get(position).getObject();
+                ((LivroAdapter.LivroViewHolder) holder).setLivroData(livro);
+
+            }
 
         }
 
@@ -114,90 +110,109 @@ public class FeedLivro extends AppCompatActivity {
             return itens.size();
         }
 
-        public int getIntViewType(int position) {
-
-           return itens.get(position).getType();
+        public int getItemViewType(int position){
+            return itens.get(position).getType();
         }
 
         /** CLASSE DE VIEWHOLDER DA RECYCLERVIEW **/
-       class LivroViewHolder extends RecyclerView.ViewHolder {
+        class LivroViewHolder extends RecyclerView.ViewHolder{
 
-           /** ATRIBUTOS DA CLASSE LIVROVIEWHOLDER **/
-           private TextView txtTitulo, txtDescricao;
-           private int cod_livro;
+            /** ATRIBUTOS DA CLASS LIVROVIEWHOLDER **/
+            private TextView txtTitulo, txtDescricao;
+            private int cod_livro;
 
-           public LivroViewHolder(@NonNull View itemView) {
-               super(itemView);
+            public LivroViewHolder(@NonNull View itemView) {
+                super(itemView);
 
-               txtTitulo = itemView.findViewById(R.id.txtTitulo);
-               txtDescricao = itemView.findViewById(R.id.txtLivroDescricao);
+                txtTitulo = itemView.findViewById(R.id.txtTitulo);
+                txtDescricao = itemView.findViewById(R.id.txtDescricao);
 
-               /** AÇÃO DE CLICK PARA EDITAR LIVRO E EXCLUIR LIVRO **/
-               itemView.setOnClickListener(view -> {
-
-                   /**
-                    * setMessage -> Título da caixa de alerta
-                        Parâmetros:
+                /** AÇÃO DE CLIQUE PARA EDITAR LIVRO E EXCLUIR LIVRO **/
+                itemView.setOnClickListener(view->{
+                    /**
+                     setMessage -> Título da caixa de alerta
+                        Parametros:
                                     1 - Título
-
-                    * setPositiveButton -> Define uma opção de ação
-                        Parâmetros:
+                     setPositiveButton -> Define uma opção de ação
+                        Parametros:
                                     1 - Título
                                     2 - Ação a ser executada
-
-                    * setNegativeButton -> Define uma opção de ação
-                        Parâmetros:
+                     setNegativeButton -> Define uma opção de ação
+                        Parametros:
                                     1 - Título
                                     2 - Ação a ser executada
-                    **/
+                     *  **/
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(FeedLivro.this)
+                            .setMessage("ESCOLHA A AÇAO QUE DESEJA EXECUTAR")
+                            .setPositiveButton("ALTERAR", (dialog1, witch)->{
 
-                   AlertDialog.Builder alertDialog = new AlertDialog.Builder(FeedLivro.this)
-                           .setMessage("Escolha a ação que deseja executar")
-                           .setPositiveButton("Alterar",(dialog1, witch)->{})
-                           .setNegativeButton("Excluir", (dialog1, witch)->{
+                                Intent intent = new Intent(FeedLivro.this, AlterarLivro.class);
+                                intent.putExtra("cod_livro", cod_livro);
+                                startActivity(intent);
 
-                               routerInterface = APIUtil.getUsuarioInterface();
+                            })
+                            .setNegativeButton("EXCLUIR", (dialog1, witch)->{
 
-                               //Executa a requisição
-                               Call<Livro> call = routerInterface.deleteLivro(cod_livro);
+                                routerInterface = APIUtil.getUsuarioInterface();
 
-                               //Executa a response
-                               call.enqueue(new Callback<Livro>() {
-                                   @Override
-                                   public void onResponse(Call<Livro> call, Response<Livro> response) {
+                                Call<Livro> call = routerInterface.deleteLivro(cod_livro);
 
-                                       Toast.makeText(FeedLivro.this,
-                                               "Livro excluído com sucesso!",
-                                               Toast.LENGTH_SHORT).show();
+                                call.enqueue(new Callback<Livro>() {
+                                    @Override
+                                    public void onResponse(Call<Livro> call, Response<Livro> response) {
 
-                                       startActivity(new Intent(FeedLivro.this, FeedLivro.class));
-                                   }
+                                        Toast.makeText(FeedLivro.this,
+                                                        "LIVRO EXCLUÍDO COM SUCESSO!",
+                                                        Toast.LENGTH_SHORT).show();
 
-                                   @Override
-                                   public void onFailure(Call<Livro> call, Throwable t) {
+                                        startActivity(new Intent(FeedLivro.this, FeedLivro.class));
 
-                                   }
-                               });
-                           });
+                                    }
 
-                   alertDialog.show();
-               });
-               
-           }//FIM DO CONSTRUTOR DA CLASSE LIVROVIEWHOLDER
+                                    @Override
+                                    public void onFailure(Call<Livro> call, Throwable t) {
 
-           /** MÉTODO QUE CARREGA OS VALORES NOS ELEMENTOS DE TEXTVIEW
+                                    }
+                                });
+
+                            });
+
+                    alertDialog.show();
+
+                });
+
+            }//FIM DO CONSTRUTOR DA CLASSE LIVROVIEWHOLDER
+
+            /** MÉTODO QUE CARREGA OS VALORES NOS ELMENTOS DE TEXTVIEW
                 - txtTitulo
                 - txtDescricao
-            * **/
-           public void setLivroData(Livro livro) {
+             * **/
+            public void setLivroData(Livro livro){
 
-               txtTitulo.setText(livro.getTitulo());
-               txtDescricao.setText(livro.getDescricao());
-               cod_livro = livro.getCod_livro();
-           }
+                txtTitulo.setText(livro.getTitulo());
+                txtDescricao.setText(livro.getDescricao());
+                cod_livro = livro.getCod_livro();
 
-       }//FIM DA CLASSE LIVROVIEWHOLDER
+            }
+
+        }//FIM DA CLASSE LIVROVIEWHOLDER
+
 
     }
 
-}//FIM DA CLASSE FeedLivro
+}//FIM DA CLASSE FEEDLIVRO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
